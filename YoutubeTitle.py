@@ -47,10 +47,12 @@ def get_transcript_automatically(video_id):
             transcript = list(transcript_list)[0]  # Lấy transcript đầu tiên có sẵn
             print(f"Transcript '{transcript.language}' đã được chọn.")
 
-        # Lấy transcript và gộp nội dung thành đoạn văn
+        # Lấy transcript và gộp nội dung thành đoạn văn kèm thời gian
         full_transcript = ""
         for entry in transcript.fetch():
-            full_transcript += f"{entry['text']} "
+            start_time = entry['start']
+            text = entry['text']
+            full_transcript += f"[{start_time:.2f}s]: {text}\n"
 
         # In ra đoạn văn đã gộp
         print("\nNội dung transcript:")
@@ -58,6 +60,9 @@ def get_transcript_automatically(video_id):
 
     except Exception as e:
         print("Không thể lấy được transcript:", e)
+
+# Ví dụ sử dụng
+video_id = "e1mgHCC4Ld4"  # Thay thế bằng ID video của bạn
 
 # Gọi hàm để lấy transcript
 get_transcript_automatically(video_id)
